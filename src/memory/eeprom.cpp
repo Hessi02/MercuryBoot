@@ -1,0 +1,1 @@
+#include <MercuryBoot/memory/eeprom.hpp>

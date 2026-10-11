@@ -1,7 +1,7 @@
 #include <MercuryCAN/controller/receiver.hpp>
 #include <MercuryCAN/controller/transmitter.hpp>
 
-static Can::Controller::Receiver*   rx = nullptr;
+static Can::Controller::Receiver*    rx = nullptr;
 static Can::Controller::Transmitter* tx = nullptr;
 
 void startBootloader(void) {
@@ -20,7 +20,7 @@ int main(void) {
     volatile uint8_t magicWord = 0;
 
     Can::Model::Message rxEntryMsg(
-        0x001,
+        1,
         &magicWord 
     );
     

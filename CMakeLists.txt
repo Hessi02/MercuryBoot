@@ -4,6 +4,13 @@ project(MercuryBoot)
 
 add_subdirectory(lib/MercuryCAN)
 
-add_executable(MercuryBoot src/main.cpp)
+add_executable(
+    MercuryBoot 
+    src/main.cpp 
+    src/memory/memory.cpp   
+    src/memory/flash.cpp 
+    src/memory/eeprom.cpp 
+)
 
 target_link_libraries(MercuryBoot PRIVATE MercuryCAN)
+target_include_directories(MercuryBoot PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
