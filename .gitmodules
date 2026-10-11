@@ -1,0 +1,3 @@
+[submodule "lib/MercuryCAN"]
+	path = lib/MercuryCAN
+	url = https://github.com/Hessi02/MercuryCAN.git
