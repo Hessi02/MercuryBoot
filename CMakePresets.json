@@ -1,0 +1,27 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 23,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "avr",
+            "displayName": "Release (AVR-GCC)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/bin",
+            "toolchainFile": "${sourceDir}/lib/MercuryCAN/res/cmake/avr-gcc-toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "MCU": "at90can128"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "avr",
+            "configurePreset": "avr"
+        }
+    ]
+}

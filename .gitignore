@@ -42,6 +42,7 @@
 build/
 Build/
 build-*/
+bin/
 
 # CMake generated files
 CMakeFiles/
@@ -66,3 +67,6 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# MacOS
+*.DS_Store

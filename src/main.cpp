@@ -2,9 +2,12 @@
 #include <MercuryCAN/controller/transmitter.hpp>
 
 static Can::Controller::Receiver*   rx = nullptr;
-static Can::Controller::Tranmitter* tx = nullptr;
+static Can::Controller::Transmitter* tx = nullptr;
 
 void startBootloader(void) {
+}
+
+void resetHardware(void) {
 }
 
 void jumpToApp(void) {
@@ -23,6 +26,7 @@ int main(void) {
     
     if (rx->awaitMessage(rxEntryMsg, 100) && 0x80 == magicWord)
         startBootloader();
-    else
-        jumpToApp();
+
+    resetHardware();
+    jumpToApp();
 }
