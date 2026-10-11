@@ -5,6 +5,7 @@ uint32_t Register::getTotalSize(void) const {
 }
 
 uint8_t Register::readByte(const uint32_t& addr) const {
-    uint8_t* ptr = reinterpret_cast<uint8_t*>(0xffff & addr);
+    const uint16_t mask = getTotalSize() - 1; 
+    uint8_t* ptr = reinterpret_cast<uint8_t*>(mask & addr);
     return *ptr;
 }

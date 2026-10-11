@@ -7,5 +7,6 @@ uint32_t Flash::getTotalSize(void) const {
 }
 
 uint8_t Flash::readByte(const uint32_t addr) const {
-    return pgm_read_byte_far(address);
+    const uint32_t mask = getTotalSize() - 1; 
+    return pgm_read_byte_far(mask & address);
 }
