@@ -65,7 +65,7 @@ private:
     static constexpr uint8_t  _magicWord          = 0x80;
     static constexpr uint16_t _heartbeatCycleTime = 1000;
 
-    static constexpr std::uintptr_t _appStartAddress = 0x1000;
+    static constexpr std::uintptr_t _appStartAddress = 0x00;
 };
 
 #endif //__MERCURY_BOOT_BOOTLOADER_HPP__
