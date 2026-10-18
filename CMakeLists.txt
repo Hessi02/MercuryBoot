@@ -8,6 +8,7 @@ add_executable(
     MercuryBoot 
     src/main.cpp
     src/bootloader.cpp 
+    src/memory/memory.cpp 
     src/memory/flash.cpp 
     src/memory/eeprom.cpp 
     src/memory/sram.cpp   

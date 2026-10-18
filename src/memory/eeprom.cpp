@@ -2,11 +2,9 @@
 
 #include <avr/eeprom.h>
 
-uint32_t Eeprom::getTotalSize(void) const {
-    return _size;
-}
+Eeprom::Eeprom(void) : Memory(0x1000) {}
 
-uint8_t Eeprom::readByte(const uint32_t& addr) const {
-    uint8_t* ptr = reinterpret_cast<uint8_t*>(_mask & addr);
+uint8_t Eeprom::readByte(const uint32_t& address) const {
+    uint8_t* ptr = reinterpret_cast<uint8_t*>(calculateShiftedAddress(address));
     return eeprom_read_byte(ptr);
 }
