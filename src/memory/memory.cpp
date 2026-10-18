@@ -12,6 +12,6 @@ uint32_t Memory::buildMask(void) const {
     return _size - 1;
 }
 
-uint32_t Memory::calculateShiftedAddress(const uint32_t& address) const {
+uint32_t Memory::calcShiftedAddress(const uint32_t& address) const {
     return buildMask() & (address + _offset);
 }

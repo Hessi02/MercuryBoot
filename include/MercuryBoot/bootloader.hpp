@@ -38,7 +38,7 @@ private:
     void startMemoryReadAsync(void);
     void incrementRollingCounter(uint32_t tickCountMs);
     void onReadCallback(uint32_t tickCountMs);
-    void transmitReadData(uint8_t type, uint32_t address, uint8_t data);
+    void transmitReadData(uint8_t type, uint32_t address, uint16_t word);
     
     volatile bool _exitFlag = false;
 

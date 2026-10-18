@@ -5,6 +5,9 @@
 #include <MercuryCAN/model/message.hpp>
 #include <MercuryCAN/model/cyclicMessage.hpp>
 
+#include <avr/interrupt.h>
+#include <avr/io.h>
+
 Bootloader::Bootloader(void) : 
     _rx(new Can::Controller::Receiver), 
     _tx(new Can::Controller::Transmitter) 
@@ -37,7 +40,15 @@ void Bootloader::execute(void) {
 }
 
 void Bootloader::resetHardware(void) const {
-
+    cli();
+    TIMSK0 = 0;
+    TCCR0A = 0;
+    TIFR0 = (1 << OCF0A);
+    CANGIE = 0;
+    CANIE1 = 0;
+    CANIE2 = 0;
+    CANGCON = (1 << SWRES);
+    CANGCON = 0;
 }
 
 int Bootloader::jumpToApp(void) const {
@@ -99,20 +110,20 @@ void Bootloader::onReadCallback(uint32_t tickCountMs) {
     if (!memoryToRead)
         return;
 
-    const uint8_t byte = memoryToRead->readByte(address);
-    transmitReadData(type, address, byte);
+    const uint8_t word = memoryToRead->readWord(address);
+    transmitReadData(type, address, word);
 }
 
 void Bootloader::transmitReadData(
     uint8_t type,
     uint32_t address,
-    uint8_t data
+    uint16_t word
 ) {
     Can::Model::Message readDataFrame(
         _readMemoryTxId,
         &type,
         &address,
-        &data    
+        &word    
     );
 
     _tx->sendMessage(readDataFrame);

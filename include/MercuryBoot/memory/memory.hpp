@@ -10,10 +10,11 @@ public:
     uint32_t getSize(void) const;
     
     virtual uint8_t readByte(const uint32_t& address) const = 0;
+    virtual uint16_t readWord(const uint32_t& address) const = 0;
     
 protected:
     uint32_t buildMask(void) const;
-    uint32_t calculateShiftedAddress(const uint32_t& address) const;
+    uint32_t calcShiftedAddress(const uint32_t& address) const;
 
     const uint32_t _size;
     const uint32_t _offset;
