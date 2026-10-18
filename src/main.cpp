@@ -1,32 +1,12 @@
-#include <MercuryCAN/controller/receiver.hpp>
-#include <MercuryCAN/controller/transmitter.hpp>
-
-static Can::Controller::Receiver*    rx = nullptr;
-static Can::Controller::Transmitter* tx = nullptr;
-
-void startBootloader(void) {
-}
-
-void resetHardware(void) {
-}
-
-void jumpToApp(void) {
-}
+#include <MercuryBoot/bootloader.hpp>
 
 int main(void) {
-    rx = new Can::Controller::Receiver();
-    tx = new Can::Controller::Transmitter();
+    Bootloader boot;
 
-    volatile uint8_t magicWord = 0;
+    if (boot.awaitEntryFrame(100))
+        boot.execute();
 
-    Can::Model::Message rxEntryMsg(
-        1,
-        &magicWord 
-    );
-    
-    if (rx->awaitMessage(rxEntryMsg, 100) && 0x80 == magicWord)
-        startBootloader();
+    boot.resetHardware();
 
-    resetHardware();
-    jumpToApp();
+    return boot.jumpToApp();
 }
