@@ -32,7 +32,8 @@ void Bootloader::execute(void) {
         &exitByte        
     );
 
-    _rx->awaitMessage(exitMessage);
+    while (_magicWord != exitByte)
+        _rx->awaitMessage(exitMessage);
 }
 
 void Bootloader::resetHardware(void) const {
