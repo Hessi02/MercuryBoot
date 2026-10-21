@@ -11,10 +11,10 @@
 extern const char dbcStr[];
 
 Bootloader::Bootloader(void) : 
+    _dbc(new Can::Model::Database(dbcStr)),
     _rx(new Can::Controller::Receiver), 
-    _tx(new Can::Controller::Transmitter) 
+    _tx(new Can::Controller::Transmitter)
 {   
-    _dbc = new Can::Model::Database(dbcStr);
 }
 
 bool Bootloader::awaitEntryFrame(const uint32_t timeoutMs) const {

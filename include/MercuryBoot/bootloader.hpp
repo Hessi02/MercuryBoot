@@ -59,15 +59,8 @@ private:
     Flash  _flash;
     Sram   _sram;
 
-    static constexpr uint16_t _entryFrameRxId = 0x01;
-    static constexpr uint16_t _heartbeatTxId  = 0x02;
-    static constexpr uint16_t _exitFrameRxId  = 0x03;
-    static constexpr uint16_t _readMemoryRxId = 0x10;
-    static constexpr uint16_t _readMemoryTxId = 0x11;
-
-    static constexpr uint8_t  _magicWord          = 0x80;
-    static constexpr uint16_t _heartbeatCycleTime = 1000;
-
+    static constexpr uint8_t  _magicWord             = 0x80;
+    static constexpr uint16_t _heartbeatCycleTime    = 1000;
     static constexpr std::uintptr_t _appStartAddress = 0x00;
 };
 
