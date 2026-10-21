@@ -8,35 +8,33 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
+extern const char dbcStr[];
+
 Bootloader::Bootloader(void) : 
     _rx(new Can::Controller::Receiver), 
     _tx(new Can::Controller::Transmitter) 
-{}
+{   
+    _dbc = new Can::Model::Database(dbcStr);
+}
 
 bool Bootloader::awaitEntryFrame(const uint32_t timeoutMs) const {
-    volatile uint8_t value = 0;
-
-    Can::Model::Message rxEntryMsg(
-        _entryFrameRxId,
-        &value 
-    );
+    volatile uint8_t i = 0;
     
-    return _rx->awaitMessage(rxEntryMsg, timeoutMs) && _magicWord == value;
+    Can::Model::Message* entryMessageRx = _dbc->buildMessage("BootEntry", &i);
+    
+    return _rx->awaitMessage(*entryMessageRx, timeoutMs) && _magicWord == i;
 }
 
 void Bootloader::execute(void) {
     startHeartbeat();
     startMemoryReadAsync();
 
-    volatile uint8_t exitByte = 0;
+    volatile uint8_t i = 0;
 
-    Can::Model::Message exitMessage(
-        _exitFrameRxId,
-        &exitByte        
-    );
+    Can::Model::Message* exitMessageRx = _dbc->buildMessage("BootExit", &i);
 
-    while (_magicWord != exitByte)
-        _rx->awaitMessage(exitMessage);
+    while (_magicWord != i)
+        _rx->awaitMessage(*exitMessageRx);
 }
 
 void Bootloader::resetHardware(void) const {
@@ -57,8 +55,8 @@ int Bootloader::jumpToApp(void) const {
 }
  
 void Bootloader::startHeartbeat(void) {
-    _heartbeatMessage = new Can::Model::CyclicMessage(
-        _heartbeatTxId,
+    _heartbeatMessage = _dbc->buildCyclicMessage(
+        "Heartbeat",
         _heartbeatCycleTime,
         &_rollingCounter
     ); 
@@ -78,8 +76,8 @@ void Bootloader::incrementRollingCounter(uint32_t) {
 }
 
 void Bootloader::startMemoryReadAsync(void) {
-    _readMemoryMessage = new Can::Model::CyclicMessage(
-        _readMemoryRxId,
+    _readMemoryMessage = _dbc->buildCyclicMessage(
+        "MemoryReadRx",
         1,
         &_readMemoryType,
         &_readMemoryAddress
@@ -119,12 +117,12 @@ void Bootloader::transmitReadData(
     uint32_t address,
     uint16_t word
 ) {
-    Can::Model::Message readDataFrame(
-        _readMemoryTxId,
+    Can::Model::Message* readDataFrame = _dbc->buildMessage(
+        "MemoryReadTx",
         &type,
         &address,
         &word    
     );
 
-    _tx->sendMessage(readDataFrame);
+    _tx->sendMessage(*readDataFrame);
 }

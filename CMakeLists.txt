@@ -14,5 +14,11 @@ add_executable(
     src/memory/sram.cpp   
 )
 
+embed_dbc(
+    MercuryBoot
+    "${CMAKE_CURRENT_SOURCE_DIR}/res/database/MercuryBoot.dbc"
+    dbcStr
+)
+
 target_link_libraries(MercuryBoot PRIVATE MercuryCAN)
 target_include_directories(MercuryBoot PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

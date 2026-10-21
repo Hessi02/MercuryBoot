@@ -1,0 +1,19 @@
+VERSION ""
+
+NS_ :
+
+
+BS_:
+
+BU_:
+
+
+BO_ 1 BootEntry: 1 Vector__XXX
+
+BO_ 2 Heartbeat: 1 MercuryBoot
+
+BO_ 3 BootExit: 1 Vector__XXX
+
+BO_ 16 MemoryReadRx: 5 Vector__XXX 
+
+BO_ 17 MemoryReadTx: 7 MercuryBoot

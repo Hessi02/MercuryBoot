@@ -8,6 +8,7 @@
 #include <MercuryBoot/memory/sram.hpp>
 
 #include <MercuryCAN/support/signalSlot/metaObject.hpp>
+#include <MercuryCAN/model/database.hpp>
 
 namespace Can 
 {    
@@ -41,6 +42,8 @@ private:
     void transmitReadData(uint8_t type, uint32_t address, uint16_t word);
     
     volatile bool _exitFlag = false;
+
+    const Can::Model::Database* _dbc;
 
     Can::Controller::Receiver*    _rx = nullptr;
     Can::Controller::Transmitter* _tx = nullptr;
